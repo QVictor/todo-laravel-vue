@@ -27,7 +27,8 @@
                   item: this.item
               })
               .then(response => {
-                  if (response.status == 201) {
+                  if (response.status === 201) {
+                      this.$emit('reloadlist');
                       this.item.name = "";
                   }
               })
