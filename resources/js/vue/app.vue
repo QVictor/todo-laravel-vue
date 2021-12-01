@@ -6,22 +6,43 @@
             </h2>
             <add-item-form/>
         </div>
-        <list-view/>
+        <list-view
+            :items="items"
+            v-on:reloadlist="getList()"/>
     </div>
 </template>
 
 <script>
 // import addItemForm from "./addItemForm";
-import ListView from "./listView";
-import AddItemForm from "./addItemForm";
+import listView from "./listView";
+import addItemForm from "./addItemForm";
 
 export default {
-    components: {AddItemForm, ListView},
+    components: {addItemForm, listView},
     comments: {
-        AddItemForm,
-        ListView
+        addItemForm,
+        listView
+    },
+    data: function () {
+        return {
+            items: []
+        }
+    },
+    methods: {
+        getList() {
+            console.log('getList');
+            axios.get('api/items')
+                .then(response => {
+                    this.items = response.data
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+    },
+    created() {
+        this.getList();
     }
-
 }
 </script>
 
