@@ -6,19 +6,20 @@
             </h2>
             <add-item-form/>
         </div>
-        <list-vue/>
-        Hello
+        <list-view/>
     </div>
 </template>
 
 <script>
-import addItemForm from "./addItemForm";
-import listView from "./listView";
+// import addItemForm from "./addItemForm";
+import ListView from "./listView";
+import AddItemForm from "./addItemForm";
 
 export default {
+    components: {AddItemForm, ListView},
     comments: {
-        addItemForm,
-        listView
+        AddItemForm,
+        ListView
     }
 
 }
