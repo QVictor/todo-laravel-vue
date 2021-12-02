@@ -5,6 +5,7 @@
 In directory project run command
 
     php artisan serve
+    php artisan migrate
 
 Open project in http://localhost
 
