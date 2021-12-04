@@ -12279,6 +12279,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['item'],
   methods: {
@@ -12289,18 +12290,36 @@ __webpack_require__.r(__webpack_exports__);
         item: this.item
       }).then(function (responce) {
         if (responce.status === 200) {
+          console.log('true');
+
           _this.$emit('itemchanged');
         }
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    removeItem: function removeItem() {
+    updateName: function updateName() {
       var _this2 = this;
+
+      axios.put('api/item/' + this.item.id, {
+        item: this.item
+      }).then(function (responce) {
+        if (responce.status === 200) {
+          console.log('true');
+          console.log(_this2);
+
+          _this2.$emit('itemchange');
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    removeItem: function removeItem() {
+      var _this3 = this;
 
       axios["delete"]('api/item/' + this.item.id).then(function (responce) {
         if (responce.status === 200) {
-          _this2.$emit('itemchanged');
+          _this3.$emit('itemchanged');
         }
       })["catch"](function (error) {
         console.log(error);
@@ -30831,7 +30850,7 @@ var render = function () {
         { staticClass: "heading" },
         [
           _c("h2", { attrs: { id: "title" } }, [
-            _vm._v("\n            Todo List31\n        "),
+            _vm._v("\n            Todo List\n        "),
           ]),
           _vm._v(" "),
           _c("add-item-form", {
@@ -30938,6 +30957,9 @@ var render = function () {
       class: [_vm.item.completed ? "completed" : "", "itemText"],
       domProps: { value: _vm.item.name },
       on: {
+        change: function ($event) {
+          return _vm.updateName()
+        },
         input: function ($event) {
           if ($event.target.composing) {
             return
