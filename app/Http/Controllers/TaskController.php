@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Item;
+use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return Item::orderBy('created_at', 'DESC')->get();
+        return Task::orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -36,10 +36,10 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $newItem = new Item;
-        $newItem->name = $request->item["name"];
-        $newItem->save();
-        return $newItem;
+        $newTask = new Task;
+        $newTask->name = $request->task["name"];
+        $newTask->save();
+        return $newTask;
     }
 
     /**
@@ -73,16 +73,16 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $existingItem = Item::find($id);
+        $existingTask = Task::find($id);
 
-        if ($existingItem) {
-            $existingItem->name = $request->item['name'];
-            $existingItem->completed = $request->item['completed'] ? true : false;
-            $existingItem->completed_at = $request->item['completed'] ? Carbon::now() : null;
-            $existingItem->save();
-            return $existingItem;
+        if ($existingTask) {
+            $existingTask->name = $request->task['name'];
+            $existingTask->completed = $request->task['completed'] ? true : false;
+            $existingTask->completed_at = $request->task['completed'] ? Carbon::now() : null;
+            $existingTask->save();
+            return $existingTask;
         }
-        return "Item not found.";
+        return "Task not found.";
     }
 
     /**
@@ -93,13 +93,13 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $existingItem = Item::find($id);
+        $existingTask = Task::find($id);
 
-        if ($existingItem) {
-            $existingItem->delete();
-            return "Item successfully deleted";
+        if ($existingTask) {
+            $existingTask->delete();
+            return "Task successfully deleted";
         }
 
-        return "Item not found";
+        return "Task not found";
     }
 }

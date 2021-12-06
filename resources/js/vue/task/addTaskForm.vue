@@ -1,10 +1,10 @@
 <template>
-    <div class="addItem">
-        <input type="text" v-model="item.name"/>
+    <div class="addTask">
+        <input type="text" v-model="task.name"/>
         <font-awesome-icon
         icon="plus-square"
-        @click="addItem()"
-        :class="[ item.name ? 'active' : 'inactive', 'plus']"/>
+        @click="addTask()"
+        :class="[ task.name ? 'active' : 'inactive', 'plus']"/>
     </div>
 </template>
 
@@ -12,24 +12,24 @@
     export default {
         data: function () {
             return {
-                item: {
+                task: {
                     name: ""
                 }
             }
         },
         methods: {
-          addItem() {
-              if (this.item.name === '') {
+          addTask() {
+              if (this.task.name === '') {
                   return;
               }
 
-              axios.post('api/item/store', {
-                  item: this.item
+              axios.post('api/task/store', {
+                  task: this.task
               })
               .then(response => {
                   if (response.status === 201) {
                       this.$emit('reloadlist');
-                      this.item.name = "";
+                      this.task.name = "";
                   }
               })
               .catch(error => {
@@ -41,7 +41,7 @@
 </script>
 
 <style>
-.addItem {
+.addTask {
     display: flex;
     justify-content: center;
     align-items: center;

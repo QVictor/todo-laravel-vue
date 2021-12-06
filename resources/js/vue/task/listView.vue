@@ -1,28 +1,28 @@
 <template>
     <div>
-        <div v-for="(item,index) in items" :key="index">
-            <list-item
-                :item="item"
-                class="item"
-                v-on:itemchanged="$emit('reloadlist')"
+        <div v-for="(task,index) in tasks" :key="index">
+            <list-task
+                :task="task"
+                class="task"
+                v-on:taskchanged="$emit('reloadlist')"
             />
         </div>
     </div>
 </template>
 
 <script>
-import listItem from "./listItem";
+import listTask from "./listTasks";
 
 export default {
-    props: ['items'],
+    props: ['tasks'],
     components: {
-        listItem
+        listTask
     }
 }
 </script>
 
 <style scoped>
-.item {
+.task {
     background: #dddddd;
     padding: 5px;
     margin: 5px;

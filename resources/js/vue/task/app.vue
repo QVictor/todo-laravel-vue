@@ -4,36 +4,36 @@
             <h2 id="title">
                 Todo List
             </h2>
-            <add-item-form
+            <add-task-form
                 v-on:reloadlist="getList()"/>
         </div>
         <list-view
-            :items="items"
+            :tasks="tasks"
             v-on:reloadlist="getList()"/>
     </div>
 </template>
 
 <script>
 import listView from "./listView";
-import addItemForm from "./addItemForm";
+import addTaskForm from "./addTaskForm";
 
 export default {
-    components: {addItemForm, listView},
+    components: {addTaskForm: addTaskForm, listView},
     comments: {
-        addItemForm,
+        addTaskForm: addTaskForm,
         listView
     },
     data: function () {
         return {
-            items: []
+            tasks: []
         }
     },
     methods: {
         getList() {
             console.log('getList');
-            axios.get('api/items')
+            axios.get('api/tasks')
                 .then(response => {
-                    this.items = response.data
+                    this.tasks = response.data
                 })
                 .catch(error => {
                     console.log(error);

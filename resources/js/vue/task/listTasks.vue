@@ -1,12 +1,12 @@
 <template>
-    <div class="item">
+    <div class="task">
         <input type="checkbox"
                @change="updateCheck()"
-               v-model="item.completed"/>
-        <input v-model="item.name"
+               v-model="task.completed"/>
+        <input v-model="task.name"
                @change="updateName()"
-            :class="[item.completed ? 'completed' : '', 'itemText']">
-        <button @click="removeItem()" class="trashcan">
+            :class="[task.completed ? 'completed' : '', 'taskText']">
+        <button @click="removeTask()" class="trashcan">
             <font-awesome-icon icon="trash"/>
         </button>
     </div>
@@ -14,16 +14,16 @@
 
 <script>
 export default {
-    props: ['item'],
+    props: ['task'],
     methods: {
         updateCheck() {
-            axios.put('api/item/' + this.item.id, {
-                item: this.item
+            axios.put('api/task/' + this.task.id, {
+                task: this.task
             })
                 .then(responce => {
                     if (responce.status === 200) {
                         console.log('true');
-                        this.$emit('itemchanged');
+                        this.$emit('taskchanged');
                     }
                 })
                 .catch(error => {
@@ -31,25 +31,25 @@ export default {
                 })
         },
         updateName() {
-            axios.put('api/item/' + this.item.id, {
-                item:this.item
+            axios.put('api/task/' + this.task.id, {
+                task:this.task
             })
             .then(responce => {
                 if (responce.status === 200) {
                     console.log('true');
                     console.log(this);
-                    this.$emit('itemchange');
+                    this.$emit('taskchange');
                 }
             })
             .catch(error => {
                 console.log(error);
             })
         },
-        removeItem() {
-            axios.delete('api/item/' + this.item.id)
+        removeTask() {
+            axios.delete('api/task/' + this.task.id)
                 .then(responce => {
                     if (responce.status === 200) {
-                        this.$emit('itemchanged')
+                        this.$emit('taskchanged')
                     }
                 })
                 .catch(error => {
@@ -66,12 +66,12 @@ export default {
     color: #999999;
 }
 
-.itemText {
+.taskText {
     width: 100%;
     margin-left: 20px;
 }
 
-.item {
+.task {
     display: flex;
     justify-content: center;
     align-items: center;
