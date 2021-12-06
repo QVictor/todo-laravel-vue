@@ -14,7 +14,6 @@
 </template>
 
 <script>
-// import addItemForm from "./addItemForm";
 import listView from "./listView";
 import addItemForm from "./addItemForm";
 
