@@ -17,6 +17,7 @@ class TaskFactory extends Factory
     {
         return [
             'name' => $this->faker->realText(20),
+            'desk_id' => $this->faker->numberBetween(1,6),
             'completed' => $this->faker->numberBetween(0,1),
             'completed_at' => $this->faker->dateTimeBetween(
         Carbon::today()->format('Y-m-d H:m:s'),
