@@ -15,7 +15,18 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return Task::orderBy('created_at', 'DESC')->get();
+//        $task = Task::where('competed', 1)->groupBy('desk_id')->orderBy('created_at', 'DESC')->get();
+//        var_dump($task);
+//        var_dump($task);
+//        return $task;
+//        $task = Task::where('completed', 1)->groupBy('desk_id')->get();
+//        $task = Task::orderBy('updated_at')->get();
+        $task = Task::all()->groupBy('desk_id');
+//        $task = Task::where('desk_id', );
+//        $task = Task::find(1);
+
+//        $task = (new Task())->all()->orderBy('desk_id');
+        return $task;
     }
 
     /**

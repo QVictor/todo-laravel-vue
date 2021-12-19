@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\DeskController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
-|--------------------------------------------------------------------------
+|---------------------------------------------------------
+-----------------
 | API Routes
 |--------------------------------------------------------------------------
 |
@@ -20,8 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/tasks', [TaskController::class, 'index']);
+
+
 Route::prefix('/task')->group(function() {
    Route::post('/store', [TaskController::class, 'store']);
    Route::put('/{id}', [TaskController::class, 'update']);
    Route::delete('/{id}', [TaskController::class, 'destroy']);
+});
+
+Route::get('/desks', [DeskController::class, 'index']);
+Route::prefix('/desk')->group(function() {
+    Route::post('/store', [DeskController::class, 'store']);
+    Route::put('/{id}', [DeskController::class, 'update']);
+    Route::delete('/{id}', [DeskController::class, 'destroy']);
 });

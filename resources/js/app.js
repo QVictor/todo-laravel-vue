@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './vue/task/app.vue'
 import VueRouter from "vue-router";
 import Home from './vue/Home.vue';
+import Desk from './vue/desk/desk';
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,11 @@ const router = new VueRouter({
             name: 'app',
             component: App
         },
+        {
+            path: '/Desk',
+            name: 'desk',
+            component: Desk
+        }
     ]
 });
 
@@ -29,6 +35,6 @@ const app = new Vue({
     router,
     el: '#app',
     components: {
-        Home
+        Home, Desk
     }
 })

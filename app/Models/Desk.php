@@ -30,4 +30,9 @@ use Illuminate\Database\Eloquent\Model;
 class Desk extends Model
 {
     use HasFactory;
+
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
 }

@@ -16,6 +16,7 @@
 <script>
 import listView from "./listView";
 import addTaskForm from "./addTaskForm";
+import {forEach} from "lodash/fp/_util";
 
 export default {
     components: {addTaskForm: addTaskForm, listView},
@@ -31,8 +32,9 @@ export default {
     methods: {
         getList() {
             console.log('getList');
-            axios.get('api/tasks')
+            axios.get('api/desks')
                 .then(response => {
+                    console.log(response);
                     this.tasks = response.data
                 })
                 .catch(error => {
