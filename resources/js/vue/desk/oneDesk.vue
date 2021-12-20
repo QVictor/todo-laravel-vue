@@ -2,19 +2,20 @@
     <div>
         <input type="text"
                v-model="desk.name"/>
-        <list-view
+        <list-tasks
             :tasks="desk.tasks"
-
+            :desk_id="desk.id"
+            v-on:taskchanged="$emit('reloadlist')"
         />
     </div>
 </template>
 
 <script>
-import listView from "../task/listView";
+import listTasks from "../task/listTasks"
 
 export default {
     components: {
-        listView
+        listTasks
     },
     props: ['desk']
 }

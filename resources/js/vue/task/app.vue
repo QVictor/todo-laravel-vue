@@ -14,14 +14,13 @@
 </template>
 
 <script>
-import listView from "./listView";
-import addTaskForm from "./addTaskForm";
-import {forEach} from "lodash/fp/_util";
+import listView from "./listTasks";
+import addTaskForm from "./addTask";
 
 export default {
-    components: {addTaskForm: addTaskForm, listView},
+    components: {addTaskForm, listView},
     comments: {
-        addTaskForm: addTaskForm,
+        addTaskForm,
         listView
     },
     data: function () {

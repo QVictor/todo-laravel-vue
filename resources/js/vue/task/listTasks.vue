@@ -1,86 +1,50 @@
 <template>
-    <div class="task">
-        <input type="checkbox"
-               @change="updateCheck()"
-               v-model="task.completed"/>
-        <input v-model="task.name"
-               @change="updateName()"
-            :class="[task.completed ? 'completed' : '', 'taskText']">
-        <button @click="removeTask()" class="trashcan">
-            <font-awesome-icon icon="trash"/>
-        </button>
+    <div>
+        <add-task :desk_id="desk_id" @add-task="reloadListTask()"/>
+        <div v-for="(task,index) in tasks" :key="index">
+            <one-task
+                :task="task"
+                class="task"
+                v-on:taskchanged="$emit('reloadlist')"
+            />
+        </div>
     </div>
 </template>
 
 <script>
+import oneTask from "./oneTask";
+import addTask from "./addTask";
+
 export default {
-    props: ['task'],
+    props: ['tasks', 'desk_id'],
+    components: {
+        oneTask,
+        addTask
+    },
     methods: {
-        updateCheck() {
-            axios.put('api/task/' + this.task.id, {
-                task: this.task
-            })
-                .then(responce => {
-                    if (responce.status === 200) {
-                        console.log('true');
-                        this.$emit('taskchanged');
-                    }
+        reloadListTask() {
+            console.log('reloadListTask');
+            axios.get('api/desks')
+                .then(response => {
+                    Object.entries(response.data).forEach(element => {
+                        if (element[1].id === this.desk_id) {
+                            this.tasks = element[1].tasks
+                        }
+                    });
+                    console.log(this.tasks);
                 })
                 .catch(error => {
                     console.log(error);
                 })
         },
-        updateName() {
-            axios.put('api/task/' + this.task.id, {
-                task:this.task
-            })
-            .then(responce => {
-                if (responce.status === 200) {
-                    console.log('true');
-                    console.log(this);
-                    this.$emit('taskchange');
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        },
-        removeTask() {
-            axios.delete('api/task/' + this.task.id)
-                .then(responce => {
-                    if (responce.status === 200) {
-                        this.$emit('taskchanged')
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
-    }
+    },
 }
 </script>
 
 <style scoped>
-.completed {
-    text-decoration: line-through;
-    color: #999999;
-}
-
-.taskText {
-    width: 100%;
-    margin-left: 20px;
-}
-
 .task {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.trashcan {
-    background: #e6e6e6;
-    border: none;
-    color: #ff0000;
-    outline: none;
+    background: #dddddd;
+    padding: 5px;
+    margin: 5px;
 }
 </style>

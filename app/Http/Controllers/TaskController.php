@@ -49,6 +49,7 @@ class TaskController extends Controller
     {
         $newTask = new Task;
         $newTask->name = $request->task["name"];
+        $newTask->desk_id = $request->task["desk_id"];
         $newTask->save();
         return $newTask;
     }
