@@ -16,11 +16,9 @@ class DeskController extends Controller
      */
     public function index()
     {
-        $desk_one = Desk::find(1);
         $desks = Desk::all();
-        $deskWithTasks = collect();
         foreach ($desks as $desk) {
-            $desks['desks'] = $desk->tasks;
+            $desk['desks'] = $desk->tasks;
         }
         return $desks;
     }
