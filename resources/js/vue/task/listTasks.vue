@@ -1,6 +1,5 @@
 <template>
     <div>
-        <add-task :desk_id="desk_id" @add-task="reloadListTask()"/>
         <div v-for="(task,index) in tasks" :key="index">
             <one-task
                 :task="task"

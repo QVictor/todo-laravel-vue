@@ -18,6 +18,7 @@ class DeskController extends Controller
     {
         $desks = Desk::all();
         foreach ($desks as $desk) {
+            //Добавить desk-сортировку по дате создания
             $desk['desks'] = $desk->tasks;
         }
         return $desks;

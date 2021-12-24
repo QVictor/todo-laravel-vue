@@ -25,14 +25,13 @@ export default {
             if (this.task.name === '') {
                 return;
             }
-            console.log(this.task);
             axios.post('api/task/store', {
                 task: this.task,
                 desk_id: this.desk_id
             })
                 .then(response => {
                     if (response.status === 201) {
-                        this.$emit('add-task');
+                        this.$emit('add', response.data);
                         this.task.name = "";
                     }
                 })
@@ -52,6 +51,7 @@ export default {
 }
 
 input {
+    text-align: center;
     background: #f7f7f7;
     border: 0px;
     outline: none;

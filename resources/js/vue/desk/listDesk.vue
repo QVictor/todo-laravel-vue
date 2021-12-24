@@ -1,11 +1,10 @@
 <template>
-    <div class="listDesk">
+    <div class="desks">
         <div class="desks" v-for="(desk,index) in desks" :key="index">
             <one-desk
                 :desk="desk"
                 class="desk"
                 v-on:reload="reload()"
-                v-on:taskchanged="$emit('reloadlist')"
             />
         </div>
     </div>
@@ -34,7 +33,8 @@ export default {
 </script>
 
 <style scoped>
-.listDesk {
+.desks {
     display: flex;
+    gap: 15px;
 }
 </style>
