@@ -109,7 +109,7 @@ class TaskController extends Controller
 
         if ($existingTask) {
             $existingTask->delete();
-            return "Task successfully deleted";
+            return $id;
         }
 
         return "Task not found";

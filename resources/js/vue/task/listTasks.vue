@@ -5,6 +5,7 @@
                 :task="task"
                 class="task"
                 v-on:taskchanged="$emit('reloadlist')"
+                @remove-task="removeTask($event)"
             />
         </div>
     </div>
@@ -36,6 +37,13 @@ export default {
                     console.log(error);
                 })
         },
+        removeTask(taskId) {
+            this.tasks.forEach((task, index) => {
+                if (task.id === taskId) {
+                    this.tasks.splice(index, 1);
+                }
+            })
+        }
     },
 }
 </script>

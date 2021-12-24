@@ -47,9 +47,10 @@ export default {
         },
         removeTask() {
             axios.delete('api/task/' + this.task.id)
-                .then(responce => {
-                    if (responce.status === 200) {
-                        this.$emit('taskchanged')
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log(response.data);
+                        this.$emit('remove-task', response.data)
                     }
                 })
                 .catch(error => {

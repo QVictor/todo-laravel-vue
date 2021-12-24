@@ -12450,6 +12450,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -12472,6 +12473,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log(_this.tasks);
       })["catch"](function (error) {
         console.log(error);
+      });
+    },
+    removeTask: function removeTask(taskId) {
+      var _this2 = this;
+
+      this.tasks.forEach(function (task, index) {
+        if (task.id === taskId) {
+          _this2.tasks.splice(index, 1);
+        }
       });
     }
   }
@@ -12541,9 +12551,11 @@ __webpack_require__.r(__webpack_exports__);
     removeTask: function removeTask() {
       var _this3 = this;
 
-      axios["delete"]('api/task/' + this.task.id).then(function (responce) {
-        if (responce.status === 200) {
-          _this3.$emit('taskchanged');
+      axios["delete"]('api/task/' + this.task.id).then(function (response) {
+        if (response.status === 200) {
+          console.log(response.data);
+
+          _this3.$emit('remove-task', response.data);
         }
       })["catch"](function (error) {
         console.log(error);
@@ -31753,6 +31765,9 @@ var render = function () {
             on: {
               taskchanged: function ($event) {
                 return _vm.$emit("reloadlist")
+              },
+              "remove-task": function ($event) {
+                return _vm.removeTask($event)
               },
             },
           }),
