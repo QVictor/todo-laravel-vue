@@ -34,11 +34,9 @@ export default {
             axios.put('api/task/' + this.task.id, {
                 task:this.task
             })
-            .then(responce => {
-                if (responce.status === 200) {
-                    console.log('true');
-                    console.log(this);
-                    this.$emit('taskchange');
+            .then(response => {
+                if (response.status === 200) {
+                    console.log('update name success');
                 }
             })
             .catch(error => {

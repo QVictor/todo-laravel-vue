@@ -12286,6 +12286,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -12314,7 +12316,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -12450,7 +12451,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -12533,29 +12533,24 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateName: function updateName() {
-      var _this2 = this;
-
       axios.put('api/task/' + this.task.id, {
         task: this.task
-      }).then(function (responce) {
-        if (responce.status === 200) {
-          console.log('true');
-          console.log(_this2);
-
-          _this2.$emit('taskchange');
+      }).then(function (response) {
+        if (response.status === 200) {
+          console.log('update name success');
         }
       })["catch"](function (error) {
         console.log(error);
       });
     },
     removeTask: function removeTask() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios["delete"]('api/task/' + this.task.id).then(function (response) {
         if (response.status === 200) {
           console.log(response.data);
 
-          _this3.$emit('remove-task', response.data);
+          _this2.$emit('remove-task', response.data);
         }
       })["catch"](function (error) {
         console.log(error);
@@ -31662,9 +31657,6 @@ var render = function () {
           click: function ($event) {
             return _vm.addTask()
           },
-          taskchanged: function ($event) {
-            return _vm.$emit("reloadlist")
-          },
         },
       }),
     ],
@@ -31763,9 +31755,6 @@ var render = function () {
             staticClass: "task",
             attrs: { task: task },
             on: {
-              taskchanged: function ($event) {
-                return _vm.$emit("reloadlist")
-              },
               "remove-task": function ($event) {
                 return _vm.removeTask($event)
               },

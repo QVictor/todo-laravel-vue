@@ -4,7 +4,6 @@
             <one-task
                 :task="task"
                 class="task"
-                v-on:taskchanged="$emit('reloadlist')"
                 @remove-task="removeTask($event)"
             />
         </div>

@@ -4,7 +4,6 @@
         <font-awesome-icon
             icon="plus-square"
             @click="addTask()"
-            v-on:taskchanged="$emit('reloadlist')"
             :class="[ task.name ? 'active' : 'inactive', 'plus']"/>
     </div>
 </template>

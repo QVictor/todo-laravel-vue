@@ -3,7 +3,9 @@
         <input type="text"
                class="desk-name"
                v-model="desk.name"/>
-        <add-task :desk_id="desk.id" @add="addTaskInListTasks($event)"/>
+        <add-task
+            :desk_id="desk.id"
+            @add="addTaskInListTasks($event)"/>
         <list-tasks
             :tasks="desk.tasks"
             :desk_id="desk.id"
@@ -30,7 +32,7 @@ export default {
 </script>
 
 <style scoped>
-    .desk-name {
-        text-align: center;
-    }
+.desk-name {
+    text-align: center;
+}
 </style>
