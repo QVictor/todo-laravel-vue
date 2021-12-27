@@ -1,6 +1,5 @@
 <template>
     <div class="deskContainer">
-        <h1>desk</h1>
         <list-desk
             :desks="desks"
             v-on:reloadlist="getList()"/>

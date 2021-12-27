@@ -11,22 +11,12 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Task[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
      */
     public function index()
     {
-//        $task = Task::where('competed', 1)->groupBy('desk_id')->orderBy('created_at', 'DESC')->get();
-//        var_dump($task);
-//        var_dump($task);
-//        return $task;
-//        $task = Task::where('completed', 1)->groupBy('desk_id')->get();
-//        $task = Task::orderBy('updated_at')->get();
-        $task = Task::all()->groupBy('desk_id');
-//        $task = Task::where('desk_id', );
-//        $task = Task::find(1);
-
-//        $task = (new Task())->all()->orderBy('desk_id');
-        return $task;
+        $tasks = Task::all()->groupBy('desk_id');
+        return $tasks;
     }
 
     /**
@@ -43,7 +33,7 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Task
      */
     public function store(Request $request)
     {
@@ -81,7 +71,7 @@ class TaskController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function update(Request $request, $id)
     {
@@ -101,7 +91,7 @@ class TaskController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return int
      */
     public function destroy($id)
     {

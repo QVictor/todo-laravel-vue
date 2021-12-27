@@ -1,10 +1,10 @@
 require('./bootstrap');
 
 import Vue from 'vue'
-import App from './vue/task/app.vue'
 import VueRouter from "vue-router";
 import Home from './vue/Home.vue';
 import Desk from './vue/desk/desk';
+import About from './vue/About';
 
 Vue.use(VueRouter);
 
@@ -19,9 +19,9 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/App',
-            name: 'app',
-            component: App
+            path: '/About',
+            name: 'about',
+            component: About
         },
         {
             path: '/Desk',
