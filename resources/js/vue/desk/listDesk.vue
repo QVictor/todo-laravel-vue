@@ -7,14 +7,16 @@
                 v-on:reload="reload()"
             />
         </div>
+        <add-desk/>
     </div>
 </template>
 
 <script>
 import oneDesk from "./oneDesk";
+import addDesk from "./addDesk";
 
 export default {
-    components: {oneDesk},
+    components: {oneDesk, addDesk},
     props: ['desks'],
     methods: {
         reload() {

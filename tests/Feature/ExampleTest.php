@@ -14,8 +14,11 @@ class ExampleTest extends TestCase
      */
     public function test_example()
     {
-        $response = $this->get('/');
+        $response = $this->withHeaders([
+            'Content-Type' => 'application/json'])->postJson('/api/task/store', ['name' => 'test_name', 'desk_id' => '1']);
 
-        $response->assertStatus(200);
+        $response
+            ->assertStatus(201)
+            ->assertJson(['name' => 'test_name']);
     }
 }

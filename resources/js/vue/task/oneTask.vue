@@ -17,12 +17,14 @@ export default {
     props: ['task'],
     methods: {
         updateCheck() {
-            axios.put('api/task/' + this.task.id, {
-                task: this.task
-            })
+            axios.put('api/task/' + this.task.id, this.task)
                 .then(response => {
                     if (response.status === 200) {
                         console.log('update check success');
+                    } else if (response.status === 204) {
+                        console.log('task not found');
+                    } else {
+                        console.log('unknown status')
                     }
                 })
                 .catch(error => {
@@ -30,12 +32,14 @@ export default {
                 })
         },
         updateName() {
-            axios.put('api/task/' + this.task.id, {
-                task:this.task
-            })
+            axios.put('api/task/' + this.task.id, this.task)
             .then(response => {
                 if (response.status === 200) {
                     console.log('update name success');
+                } else if (response.status === 204) {
+                    console.log('task not found');
+                } else {
+                    console.log('unknown status')
                 }
             })
             .catch(error => {
@@ -46,8 +50,9 @@ export default {
             axios.delete('api/task/' + this.task.id)
                 .then(response => {
                     if (response.status === 200) {
-                        console.log(response.data);
-                        this.$emit('remove-task', response.data)
+                        this.$emit('remove-task', response.data.id)
+                    } else if (response.status === 204) {
+                        console.log('element not found');
                     }
                 })
                 .catch(error => {

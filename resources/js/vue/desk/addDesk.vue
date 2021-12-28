@@ -1,10 +1,10 @@
 <template>
-    <div class="addTask">
-        <input type="text" v-model="task.name"/>
+    <div class="addDesk">
+        <input type="text" v-model="desk.name"/>
         <font-awesome-icon
             icon="plus-square"
-            @click="addTask()"
-            :class="[ task.name ? 'active' : 'inactive', 'plus']"/>
+            @click="addDesk()"
+            :class="[ desk.name ? 'active' : 'inactive', 'plus']"/>
     </div>
 </template>
 
@@ -13,25 +13,25 @@ export default {
     props: ['desk_id'],
     data: function () {
         return {
-            task: {
+            desk: {
                 name: "",
                 desk_id: this.desk_id
             }
         }
     },
     methods: {
-        addTask() {
-            if (this.task.name === '') {
+        addDesk() {
+            if (this.desk.name === '') {
                 return;
             }
-            axios.post('api/task/store', {
-                "name": this.task.name,
+            axios.post('api/desk/store', {
+                "name": this.desk.name,
                 "desk_id": this.desk_id
             })
                 .then(response => {
                     if (response.status === 201) {
                         this.$emit('add', response.data);
-                        this.task.name = "";
+                        this.desk.name = "";
                     }
                 })
                 .catch(error => {
@@ -43,13 +43,13 @@ export default {
 </script>
 
 <style>
-.addTask {
+.addDesk {
     display: flex;
-    justify-content: center;
-    align-items: center;
+/*    justify-content: center;
+    align-items: center;*/
 }
 
-input {
+/*input {
     text-align: center;
     background: #f7f7f7;
     border: 0px;
@@ -57,7 +57,7 @@ input {
     padding: 5px;
     margin-right: 10px;
     width: 100%;
-}
+}*/
 
 .plus {
     font-size: 20px;

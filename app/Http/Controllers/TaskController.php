@@ -4,25 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Response;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Task[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
+     * @return Collection|Task[]
      */
     public function index()
     {
-        $tasks = Task::all()->groupBy('desk_id');
-        return $tasks;
+        return Task::all()->groupBy('desk_id');
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -32,23 +34,23 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Task
+     * @param Request $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
         $newTask = new Task;
-        $newTask->name = $request->task["name"];
-        $newTask->desk_id = $request->task["desk_id"];
+        $newTask->name = $request->name;
+        $newTask->desk_id = $request->desk_id;
         $newTask->save();
-        return $newTask;
+        return response()->json($newTask, 201);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function show($id)
     {
@@ -59,7 +61,7 @@ class TaskController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function edit($id)
     {
@@ -69,7 +71,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
      * @return string
      */
@@ -77,31 +79,32 @@ class TaskController extends Controller
     {
         $existingTask = Task::find($id);
 
-        if ($existingTask) {
-            $existingTask->name = $request->task['name'];
-            $existingTask->completed = $request->task['completed'] ? true : false;
-            $existingTask->completed_at = $request->task['completed'] ? Carbon::now() : null;
+        if (!$existingTask) {
+            $existingTask->name = $request->name;
+            $existingTask->completed = $request->completed ? true : false;
+            $existingTask->completed_at = $request->completed_at ? Carbon::now() : null;
             $existingTask->save();
-            return $existingTask;
+            return response()->json($existingTask, 204);
+        } else {
+            return response()->json([], 204);
         }
-        return "Task not found.";
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return int
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $existingTask = Task::find($id);
 
         if ($existingTask) {
             $existingTask->delete();
-            return $id;
+            return response()->json(['id' => (int)$id]);
+        } else {
+            return response()->json('', 204);
         }
-
-        return "Task not found";
     }
 }

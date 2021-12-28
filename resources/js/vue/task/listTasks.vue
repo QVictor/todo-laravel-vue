@@ -21,21 +21,6 @@ export default {
         addTask
     },
     methods: {
-        reloadListTask() {
-            console.log('reloadListTask');
-            axios.get('api/desks')
-                .then(response => {
-                    Object.entries(response.data).forEach(element => {
-                        if (element[1].id === this.desk_id) {
-                            this.tasks = element[1].tasks
-                        }
-                    });
-                    console.log(this.tasks);
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        },
         removeTask(taskId) {
             this.tasks.forEach((task, index) => {
                 if (task.id === taskId) {
