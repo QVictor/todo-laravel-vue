@@ -1,8 +1,13 @@
 <template>
-    <div>
-        <input type="text"
-               class="desk-name"
-               v-model="desk.name"/>
+    <div class="desk">
+        <div>
+            <input type="text"
+                   class="desk-name col-9"
+                   v-model="desk.name"/>
+            <button @click="removeDesk()" class="trashcan col-2">
+                <font-awesome-icon icon="trash"/>
+            </button>
+        </div>
         <add-task
             :desk_id="desk.id"
             @add="addTaskInListTasks($event)"/>
@@ -26,13 +31,48 @@ export default {
     methods: {
         addTaskInListTasks($task) {
             this.desk.tasks.push($task);
+        },
+        removeDesk() {
+            console.log(this.desk.id);
+            axios.delete('api/desk/' + this.desk.id)
+                .then(response => {
+                    if (response.status === 200) {
+                        this.$emit('remove-desk', response.data.id)
+                    } else if (response.status === 204) {
+                        console.log('element not found');
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
     }
 }
 </script>
 
 <style scoped>
+.desk {
+    display: flex;
+    flex-direction: column;
+}
 .desk-name {
     text-align: center;
 }
+.desk > input {
+    text-align: center;
+    background: #f7f7f7;
+    border: 0px;
+    outline: none;
+    padding: 5px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.trashcan {
+    background: #e6e6e6;
+    border: none;
+    color: #ff0000;
+    outline: none;
+}
+
 </style>

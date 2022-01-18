@@ -1,13 +1,15 @@
 <template>
-    <div class="desks">
-        <div class="desks" v-for="(desk,index) in desks" :key="index">
-            <one-desk
-                :desk="desk"
-                class="desk"
-                v-on:reload="reload()"
-            />
+    <div class="desks container">
+        <div class="row">
+            <div class="desk col-sm" v-for="(desk,index) in desks" :key="index">
+                <one-desk
+                    :desk="desk"
+                    v-on:reload="reload()"
+                    @remove-desk="removeDesk($event)"
+                />
+            </div>
+            <add-desk/>
         </div>
-        <add-desk/>
     </div>
 </template>
 
@@ -29,14 +31,18 @@ export default {
                 .catch(error => {
                     console.log(error);
                 })
+        },
+        removeDesk(deskId) {
+            this.desks.forEach((desk, index) => {
+                if (desk.id === deskId) {
+                    this.desks.splice(index, 1);
+                }
+            })
         }
     },
 }
 </script>
 
 <style scoped>
-.desks {
-    display: flex;
-    gap: 15px;
-}
+
 </style>

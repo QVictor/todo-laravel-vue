@@ -43,11 +43,10 @@ export default {
 <style>
 .addDesk {
     display: flex;
-/*    justify-content: center;
-    align-items: center;*/
+    align-items: flex-start;
 }
 
-/*input {
+.addDesk> input {
     text-align: center;
     background: #f7f7f7;
     border: 0px;
@@ -55,7 +54,7 @@ export default {
     padding: 5px;
     margin-right: 10px;
     width: 100%;
-}*/
+}
 
 .plus {
     font-size: 20px;

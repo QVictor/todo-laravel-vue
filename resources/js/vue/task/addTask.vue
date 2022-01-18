@@ -1,9 +1,11 @@
 <template>
     <div class="addTask">
-        <input type="text" v-model="task.name"/>
+        <label for="addTask">Add new task:</label>
+        <input type="text" id="addTask" class="col-9" v-model="task.name"/>
         <font-awesome-icon
             icon="plus-square"
             @click="addTask()"
+            class="col-2"
             :class="[ task.name ? 'active' : 'inactive', 'plus']"/>
     </div>
 </template>
@@ -43,21 +45,8 @@ export default {
 </script>
 
 <style>
-.addTask {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-input {
-    text-align: center;
-    background: #f7f7f7;
-    border: 0px;
-    outline: none;
-    padding: 5px;
-    margin-right: 10px;
-    width: 100%;
-}
+
 
 .plus {
     font-size: 20px;

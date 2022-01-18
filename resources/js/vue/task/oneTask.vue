@@ -69,6 +69,16 @@ export default {
     color: #999999;
 }
 
+.task > input {
+    text-align: center;
+    background: #f7f7f7;
+    border: 0px;
+    outline: none;
+    padding: 5px;
+    margin-right: 10px;
+    width: 100%;
+}
+
 .taskText {
     width: 100%;
     margin-left: 20px;
