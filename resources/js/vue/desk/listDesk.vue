@@ -8,7 +8,7 @@
                     @remove-desk="removeDesk($event)"
                 />
             </div>
-            <add-desk/>
+            <add-desk class="col-sm" @add-desk="addDesk($event)"/>
         </div>
     </div>
 </template>
@@ -38,6 +38,9 @@ export default {
                     this.desks.splice(index, 1);
                 }
             })
+        },
+        addDesk($desk) {
+            this.desks.push($desk);
         }
     },
 }

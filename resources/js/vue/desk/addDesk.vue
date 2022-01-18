@@ -28,7 +28,7 @@ export default {
             })
                 .then(response => {
                     if (response.status === 201) {
-                        this.$emit('add', response.data);
+                        this.$emit('add-desk', response.data);
                         this.desk.name = "";
                     }
                 })
