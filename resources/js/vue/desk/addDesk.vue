@@ -1,6 +1,6 @@
 <template>
     <div class="addDesk">
-        <input type="text" v-model="desk.name"/>
+        <input type="text" id="name" v-model="desk.name"/>
         <font-awesome-icon
             icon="plus-square"
             @click="addDesk()"
@@ -10,12 +10,11 @@
 
 <script>
 export default {
-    props: ['desk_id'],
+    props: [],
     data: function () {
         return {
             desk: {
                 name: "",
-                desk_id: this.desk_id
             }
         }
     },
@@ -26,7 +25,6 @@ export default {
             }
             axios.post('api/desk/store', {
                 "name": this.desk.name,
-                "desk_id": this.desk_id
             })
                 .then(response => {
                     if (response.status === 201) {
