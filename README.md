@@ -4,8 +4,11 @@
 
 In directory project run command
 
-    php artisan serve
-    php artisan migrate
+    mv .env.example .env
+    composer install --ignore-platform-reqs
+    alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
+    sail up
+    sail artisan migrate
 
 Open project in http://localhost
 
