@@ -3,7 +3,6 @@
         <div v-for="(task,index) in tasks" :key="index">
             <one-task
                 :task="task"
-                class="task"
                 @remove-task="removeTask($event)"
             />
         </div>
@@ -33,9 +32,5 @@ export default {
 </script>
 
 <style scoped>
-.task {
-    background: #dddddd;
-    padding: 5px;
-    margin: 5px;
-}
+
 </style>

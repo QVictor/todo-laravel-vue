@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Desk whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Desk whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Database\Factories\DeskFactory factory(...$parameters)
  */
 class Desk extends Model
 {
