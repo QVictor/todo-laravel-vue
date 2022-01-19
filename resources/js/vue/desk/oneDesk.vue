@@ -3,6 +3,7 @@
         <div>
             <input type="text"
                    class="desk-name col-9"
+                   @change="updateName()"
                    v-model="desk.name"/>
             <button @click="removeDesk()" class="trashcan col-2">
                 <font-awesome-icon icon="trash"/>
@@ -44,6 +45,22 @@ export default {
                 })
                 .catch(error => {
                     console.log(error)
+                })
+        },
+        updateName() {
+            console.log(this.desk);
+            axios.put('api/desk/' + this.desk.id, this.desk)
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log('update name success');
+                    } else if (response.status === 204) {
+                        console.log('desk not found');
+                    } else {
+                        console.log('unknown status')
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
                 })
         }
     }

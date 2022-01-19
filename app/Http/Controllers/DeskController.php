@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Desk;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DeskController extends Controller
@@ -74,11 +75,21 @@ class DeskController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $existingDesk = Desk::find($id);
+
+        if ($existingDesk) {
+            $existingDesk->name = $request->name;
+            $existingDesk->completed = $request->completed ? true : false;
+            $existingDesk->completed_at = $request->completed_at ? Carbon::now() : null;
+            $existingDesk->save();
+            return response()->json($existingDesk, 200);
+        } else {
+            return response()->json([], 204);
+        }
     }
 
     /**

@@ -1,14 +1,22 @@
 <template>
-    <div class="task">
-        <input type="checkbox"
-               @change="updateCheck()"
-               v-model="task.completed"/>
-        <input v-model="task.name"
-               @change="updateName()"
-            :class="[task.completed ? 'completed' : '', 'taskText']">
-        <button @click="removeTask()" class="trashcan">
-            <font-awesome-icon icon="trash"/>
-        </button>
+    <div class="container task">
+        <div class="row">
+            <div class="col-2">
+                <input type="checkbox"
+                       @change="updateCheck()"
+                       v-model="task.completed"/>
+            </div>
+            <div class="col-8">
+                <input v-model="task.name"
+                       @change="updateName()"
+                       :class="[task.completed ? 'completed' : '', 'taskText']">
+            </div>
+            <div class="col-1">
+                <button @click="removeTask()" class="trashcan">
+                    <font-awesome-icon icon="trash"/>
+                </button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -33,18 +41,18 @@ export default {
         },
         updateName() {
             axios.put('api/task/' + this.task.id, this.task)
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('update name success');
-                } else if (response.status === 204) {
-                    console.log('task not found');
-                } else {
-                    console.log('unknown status')
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            })
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log('update name success');
+                    } else if (response.status === 204) {
+                        console.log('task not found');
+                    } else {
+                        console.log('unknown status')
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
         removeTask() {
             axios.delete('api/task/' + this.task.id)
@@ -69,6 +77,12 @@ export default {
     color: #999999;
 }
 
+.task {
+    background: #dddddd;
+    padding: 5px;
+    margin: 5px;
+}
+
 .task > input {
     text-align: center;
     background: #f7f7f7;
@@ -81,7 +95,6 @@ export default {
 
 .taskText {
     width: 100%;
-    margin-left: 20px;
 }
 
 .task {
