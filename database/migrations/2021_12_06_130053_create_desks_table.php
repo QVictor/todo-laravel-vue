@@ -17,6 +17,7 @@ class CreateDesksTable extends Migration
         Schema::create('desks', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('sort');
             $table->boolean('completed')->default(true);
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();

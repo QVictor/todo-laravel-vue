@@ -17,6 +17,7 @@ class TaskFactory extends Factory
     {
         return [
             'name' => $this->faker->realText(20),
+            'sort' => $this->faker->unique->numberBetween(1, 20),
             'desk_id' => $this->faker->numberBetween(1,3),
             'completed' => $this->faker->numberBetween(0,1),
             'completed_at' => $this->faker->dateTimeBetween(

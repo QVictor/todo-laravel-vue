@@ -25,6 +25,7 @@ export default {
             }
             axios.post('api/desk/store', {
                 "name": this.desk.name,
+                "sort": this.desk.id,
             })
                 .then(response => {
                     if (response.status === 201) {

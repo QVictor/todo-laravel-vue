@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Task;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TaskSeeder extends Seeder
 {
@@ -14,6 +15,10 @@ class TaskSeeder extends Seeder
      */
     public function run()
     {
-        Task::factory(10)->create();
+        $task = new Task();
+        $factory = $task::factory();
+        for ($i = 0; $i < 20; $i++) {
+            $factory->create();
+        }
     }
 }
