@@ -17,7 +17,7 @@ class DeskFactory extends Factory
     {
         return [
             'name' => $this->faker->realText(10),
-            'sort' => $this->faker->unique->numberBetween(1, 3),
+            'sort' => $this->faker->unique->numberBetween(0, 2),
             'completed' => $this->faker->numberBetween(0,1),
             'completed_at' => $this->faker->dateTimeBetween(
                 Carbon::today()->format('Y-m-d H:m:s'),

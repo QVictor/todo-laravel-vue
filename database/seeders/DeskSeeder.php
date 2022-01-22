@@ -19,9 +19,9 @@ class DeskSeeder extends Seeder
         $faker = Faker::create();
         $desk = new Desk();
         $countDesk = 3;
-        foreach (range(1,$countDesk) as $index) {
+        foreach (range(0, $countDesk - 1) as $index) {
             $desk->create([
-                    'sort' => $faker->unique()->numberBetween(1, $countDesk),
+                    'sort' => $faker->unique()->numberBetween(0, $countDesk - 1),
                     'name' => $faker->realText(10),
                     'completed' => $faker->numberBetween(0,1),
                     'completed_at' => $faker->dateTimeBetween(
