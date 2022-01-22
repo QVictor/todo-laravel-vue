@@ -6,6 +6,9 @@ use App\Models\Desk;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Mavinoo\Batch\Batch;
+
 
 class DeskController extends Controller
 {
@@ -16,9 +19,8 @@ class DeskController extends Controller
      */
     public function index()
     {
-        $desks = Desk::all();
+        $desks = Desk::select('*')->orderBy('sort')->get();
         foreach ($desks as $desk) {
-            //Добавить desk-сортировку по дате создания
             $desk['desks'] = $desk->tasks;
         }
         return $desks;
@@ -42,8 +44,11 @@ class DeskController extends Controller
      */
     public function store(Request $request)
     {
+
         $newDesk = new Desk;
         $newDesk->name = $request->name;
+        $maxSortValue = DB::table('desks')->max('sort');
+        $newDesk->sort = $maxSortValue + 1;
         $newDesk->save();
         return response()->json($newDesk, 201);
     }
@@ -96,7 +101,7 @@ class DeskController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
@@ -108,5 +113,20 @@ class DeskController extends Controller
         } else {
             return response()->json('', 204);
         }
+    }
+
+    public function sort(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $sort = json_decode($request->getContent());
+        $sorting = [];
+        foreach ($sort as $item) {
+            $item = json_decode(json_encode($item), true);
+            $sorting[] = [
+                'id' => $item['id'],
+                'sort' => $item['sort']
+            ];
+        }
+        batch()->update((new Desk()), $sorting, 'id');
+        return response()->json('', 204);
     }
 }

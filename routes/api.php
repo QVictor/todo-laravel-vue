@@ -32,6 +32,7 @@ Route::prefix('/task')->group(function() {
 Route::get('/desks', [DeskController::class, 'index']);
 Route::prefix('/desk')->group(function() {
     Route::post('/store', [DeskController::class, 'store']);
+    Route::post('/sort', [DeskController::class, 'sort']);
     Route::put('/{id}', [DeskController::class, 'update']);
     Route::delete('/{id}', [DeskController::class, 'destroy']);
 });
