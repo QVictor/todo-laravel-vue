@@ -47,8 +47,7 @@ class DeskController extends Controller
 
         $newDesk = new Desk;
         $newDesk->name = $request->name;
-        $maxSortValue = DB::table('desks')->max('sort');
-        $newDesk->sort = $maxSortValue + 1;
+        $newDesk->sort = Desk::maxSort() + 1;
         $newDesk->save();
         return response()->json($newDesk, 201);
     }

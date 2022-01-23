@@ -41,6 +41,7 @@ class TaskController extends Controller
     {
         $newTask = new Task;
         $newTask->name = $request->name;
+        $newTask->sort = Task::maxSort() + 1;
         $newTask->desk_id = $request->desk_id;
         $newTask->save();
         return response()->json($newTask, 201);

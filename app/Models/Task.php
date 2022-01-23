@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * App\Models\Task
@@ -33,8 +34,12 @@ class Task extends Model
 {
     use HasFactory;
 
-    public function desk()
+    public function desk(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Desk::class);
+    }
+
+    public static function maxSort() {
+        return Task::max('sort');
     }
 }

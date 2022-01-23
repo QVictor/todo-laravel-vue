@@ -48,4 +48,8 @@ class Desk extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public static function maxSort() {
+        return Desk::max('sort');
+    }
 }
