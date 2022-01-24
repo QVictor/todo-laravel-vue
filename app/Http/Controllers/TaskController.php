@@ -85,7 +85,7 @@ class TaskController extends Controller
             $existingTask->completed = $request->completed ? true : false;
             $existingTask->completed_at = $request->completed_at ? Carbon::now() : null;
             $existingTask->save();
-            return response()->json($existingTask, 204);
+            return response()->json($existingTask, 200);
         } else {
             return response()->json([], 204);
         }
