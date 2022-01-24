@@ -1,6 +1,7 @@
 <template>
     <div class="container task">
         <div class="row">
+            <div class="fa fa-align-justify handle"></div>
             <div class="col-2">
                 <input type="checkbox"
                        @change="updateCheck()"
@@ -108,5 +109,10 @@ export default {
     border: none;
     color: #ff0000;
     outline: none;
+}
+.handle {
+    width: 10px;
+    height: 23px;
+    background: black;
 }
 </style>

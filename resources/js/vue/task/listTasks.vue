@@ -2,9 +2,10 @@
     <draggable
         @start="dragging=true"
         @end="dragging=false;"
-        handle=".handle"
+        v-model="tasks"
         :animation="100"
-        @sort="setSort">
+        @sort="setSort"
+        handle=".handle">
         <div v-for="(task,index) in tasks" :key="index">
             <one-task
                 :task="task"
@@ -35,15 +36,16 @@ export default {
             })
         },
         setSort(e) {
-            let sortDesk = {};
-            this.desks.forEach((desk, index) => {
-                sortDesk[index] = {
-                    'id': desk.id,
+            console.log(this.tasks);
+            let sort = {};
+            this.tasks.forEach((task, index) => {
+                sort[index] = {
+                    'id': task.id,
                     'sort': index
                 };
             });
-            console.log(sortDesk);
-            axios.post('api/desk/sort', sortDesk)
+            console.log(sort);
+            axios.post('api/task/sort', sort)
                 .then(response => {
                     console.log('success set sorting');
                     console.log(response);

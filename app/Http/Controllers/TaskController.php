@@ -108,4 +108,19 @@ class TaskController extends Controller
             return response()->json('', 204);
         }
     }
+
+    public function sort(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $sort = json_decode($request->getContent());
+        $sorting = [];
+        foreach ($sort as $item) {
+            $item = json_decode(json_encode($item), true);
+            $sorting[] = [
+                'id' => $item['id'],
+                'sort' => $item['sort']
+            ];
+        }
+        batch()->update((new Task()), $sorting, 'id');
+        return response()->json('', 204);
+    }
 }
