@@ -21,7 +21,7 @@ class DeskController extends Controller
     {
         $desks = Desk::select('*')->orderBy('sort')->get();
         foreach ($desks as $desk) {
-            $desk['desks'] = $desk->tasks;
+            $desk['tasks'] = $desk->sortTasks('asc');
         }
         return $desks;
     }

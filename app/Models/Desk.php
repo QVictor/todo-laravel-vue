@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * App\Models\Desk
@@ -51,5 +52,10 @@ class Desk extends Model
 
     public static function maxSort() {
         return Desk::max('sort');
+    }
+
+    public function sortTasks($orderBy): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->tasks()->orderBy('sort', $orderBy)->get();
     }
 }
