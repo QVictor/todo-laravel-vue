@@ -3,17 +3,13 @@
         <draggable
             class="row"
             v-model="desks"
-            group="people"
             @start="dragging=true"
             @end="dragging=false;"
             @sort="setSort"
             :animation="100"
             handle=".handle"
         >
-
             <div class="desk col-sm" v-for="(desk,index) in desks" :key="index">
-                <div class="fa fa-align-justify handle"></div>
-
                 <one-desk
                     :desk="desk"
                     v-on:reload="reload()"
@@ -57,17 +53,15 @@ export default {
             this.desks.push($desk);
         },
         setSort(e) {
-            console.log(e);
-            console.log(this.desks);
-            let sortDesk = {};
+            let sort = {};
             this.desks.forEach((desk, index) => {
-                sortDesk[index] = {
+                sort[index] = {
                     'id': desk.id,
                     'sort': index
                 };
             });
-            console.log(sortDesk);
-            axios.post('api/desk/sort', sortDesk)
+            console.log(sort);
+            axios.post('api/desk/sort', sort)
                 .then(response => {
                     console.log('success set sorting');
                     console.log(response);
@@ -82,9 +76,4 @@ export default {
 </script>
 
 <style scoped>
-.handle {
-    width: 30px;
-    height: 30px;
-    background: black;
-}
 </style>

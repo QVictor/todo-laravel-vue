@@ -1,20 +1,22 @@
 <template>
     <div class="container task">
-        <div class="row">
-            <div class="fa fa-align-justify handle"></div>
-            <div class="col-2">
+        <div class="input-group align-items-center gap-1">
+            <div class="fa fa-align-justify handle col-1" role="button"></div>
+            <div class="col-1">
                 <input type="checkbox"
                        @change="updateCheck()"
+                       class="form-check-input"
                        v-model="task.completed"/>
             </div>
-            <div class="col-8">
+            <div class="col-8 pl-0 pr-0">
                 <input v-model="task.name"
+                       class="form-control"
                        @change="updateName()"
                        :class="[task.completed ? 'completed' : '', 'taskText']">
             </div>
-            <div class="col-1">
+            <div class="col-1 px-0">
                 <button @click="removeTask()" class="trashcan">
-                    <font-awesome-icon icon="trash"/>
+                    <i class="fas fa-trash"></i>
                 </button>
             </div>
         </div>
@@ -80,28 +82,10 @@ export default {
 
 .task {
     background: #dddddd;
-    padding: 5px;
-    margin: 5px;
-}
-
-.task > input {
-    text-align: center;
-    background: #f7f7f7;
-    border: 0px;
-    outline: none;
-    padding: 5px;
-    margin-right: 10px;
-    width: 100%;
 }
 
 .taskText {
     width: 100%;
-}
-
-.task {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .trashcan {
@@ -109,10 +93,5 @@ export default {
     border: none;
     color: #ff0000;
     outline: none;
-}
-.handle {
-    width: 10px;
-    height: 23px;
-    background: black;
 }
 </style>

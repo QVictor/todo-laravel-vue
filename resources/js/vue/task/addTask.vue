@@ -1,13 +1,16 @@
 <template>
-    <div class="addTask">
-        <label for="addTask">Add new task:</label>
-        <input type="text" id="addTask" class="col-9" v-model="task.name"/>
-        <font-awesome-icon
-            icon="plus-square"
-            @click="addTask()"
-            class="col-2"
-            :class="[ task.name ? 'active' : 'inactive', 'plus']"/>
+    <div class="addTask container px-0 g-10">
+        <div class="input-group">
+            <input type="text" class="form-control col-9" id="addTask" placeholder="add new task" aria-label="add new task" v-model="task.name">
+            <div class="input-group-append">
+                <button class="btn btn-outline-success"
+                        @click="addTask()"
+                        :class="[ task.name ? 'active' : 'inactive']"
+                        type="button">+</button>
+            </div>
+        </div>
     </div>
+
 </template>
 
 <script>
@@ -45,13 +48,6 @@ export default {
 </script>
 
 <style>
-
-
-
-.plus {
-    font-size: 20px;
-}
-
 .active {
     color: #00CE25;
 }
@@ -59,5 +55,4 @@ export default {
 .inactive {
     color: gray;
 }
-
 </style>

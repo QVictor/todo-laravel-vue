@@ -1,10 +1,18 @@
 <template>
-    <div class="addDesk">
-        <input type="text" id="name" v-model="desk.name"/>
-        <font-awesome-icon
-            icon="plus-square"
-            @click="addDesk()"
-            :class="[ desk.name ? 'active' : 'inactive', 'plus']"/>
+    <div class="addDesk container px-0">
+        <div class="input-group">
+            <input type="text"
+                   class="form-control col-9"
+                   id="name"
+                   placeholder="add new desk"
+                   v-model="desk.name"/>
+            <div class="input-group-append">
+                <button
+                class="btn btn-outline-success"
+                @click="addDesk()"
+                :class="[ desk.name ? 'active' : 'inactive']">+</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -42,24 +50,7 @@ export default {
 </script>
 
 <style>
-.addDesk {
-    display: flex;
-    align-items: flex-start;
-}
 
-.addDesk> input {
-    text-align: center;
-    background: #f7f7f7;
-    border: 0px;
-    outline: none;
-    padding: 5px;
-    margin-right: 10px;
-    width: 100%;
-}
-
-.plus {
-    font-size: 20px;
-}
 
 .active {
     color: #00CE25;

@@ -9,6 +9,7 @@
         <div v-for="(task,index) in tasks" :key="index">
             <one-task
                 :task="task"
+                class="mt-1 mb-1 p-1"
                 @remove-task="removeTask($event)"
             />
         </div>

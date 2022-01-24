@@ -1,12 +1,15 @@
 <template>
-    <div class="desk">
-        <div>
-            <input type="text"
-                   class="desk-name col-9"
-                   @change="updateName()"
-                   v-model="desk.name"/>
+    <div class="desk d-flex flex-column gap-1">
+        <div class="desk d-flex justify-content-center">
+            <div class="fa fa-align-justify handle col-1 align-self-center" role="button"></div>
+            <div>
+                <input type="text"
+                       class="form-control desk-name col-8"
+                       @change="updateName()"
+                       v-model="desk.name"/>
+            </div>
             <button @click="removeDesk()" class="trashcan col-2">
-                <font-awesome-icon icon="trash"/>
+                <i class="fas fa-trash"></i>
             </button>
         </div>
         <add-task
@@ -68,28 +71,10 @@ export default {
 </script>
 
 <style scoped>
-.desk {
-    display: flex;
-    flex-direction: column;
-}
-.desk-name {
-    text-align: center;
-}
-.desk > input {
-    text-align: center;
-    background: #f7f7f7;
-    border: 0px;
-    outline: none;
-    padding: 5px;
-    margin-right: 10px;
-    width: 100%;
-}
-
 .trashcan {
     background: #e6e6e6;
     border: none;
     color: #ff0000;
     outline: none;
 }
-
 </style>
