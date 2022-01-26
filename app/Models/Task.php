@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+
 /**
  * App\Models\Task
  *
@@ -34,12 +35,19 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'desk_id',
+        'sort',
+    ];
+
     public function desk(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Desk::class);
     }
 
-    public static function maxSort() {
+    public static function maxSort()
+    {
         return Task::max('sort');
     }
 }

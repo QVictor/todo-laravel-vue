@@ -44,12 +44,15 @@ class DeskController extends Controller
      */
     public function store(Request $request)
     {
-
         $newDesk = new Desk;
         $newDesk->name = $request->name;
         $newDesk->sort = Desk::maxSort() + 1;
-        $newDesk->save();
-        return response()->json($newDesk, 201);
+        $saved = $newDesk->save();
+        if ($saved) {
+            return response()->json($newDesk, 201);
+        } else {
+            return response()->json('', 204);
+        }
     }
 
     /**
