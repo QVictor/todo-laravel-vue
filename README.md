@@ -15,6 +15,7 @@ for install composer dependencies use next command:
 
 read more here:
 https://laravel.com/docs/8.x/sail#installing-composer-dependencies-for-existing-projects
+    
     cp .env.example .env  
     alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
     sail up
