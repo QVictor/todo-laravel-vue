@@ -4,7 +4,7 @@
 
 ## install project with docker:
 
-for install composer dependencies use next commmand:
+for install composer dependencies use next command:
 
     docker run --rm \ 
     -u "$(id -u):$(id -g)" \ 
