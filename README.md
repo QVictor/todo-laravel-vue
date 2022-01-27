@@ -21,3 +21,7 @@ https://laravel.com/docs/8.x/sail#installing-composer-dependencies-for-existing-
     sail up
     sail artisan migrate
     sail artisan key:generate
+
+## run tests
+
+    sail artisan test  --testsuite=Feature --stop-on-failure
