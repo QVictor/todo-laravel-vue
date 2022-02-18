@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -49,5 +50,39 @@ class Task extends Model
     public static function maxSort()
     {
         return Task::max('sort');
+    }
+
+    public function sortedTasks()
+    {
+        return Task::all()->groupBy('desk_id');
+    }
+
+    public function store(string $name, int $deskId) {
+        return self::create([
+            'name' => $name,
+            'sort' => Task::maxSort() + 1,
+            'desk_id' => $deskId
+        ]);
+    }
+
+    public function updateItem(int $deskId, string $name, int $sort, bool $completed, Carbon | null $completed_at)
+    {
+        $item = Task::find($deskId);
+        if ($item) {
+            $item->fill([
+                'name' => $name,
+                'sort' => $sort,
+                'completed' => $completed,
+                'completed_at' => $completed_at ? $completed_at->format('Y-m-d h:i:s') : null
+            ]);
+            $item->save();
+        }
+        return $item;
+    }
+
+
+    public function deleteIfExist(int $id)
+    {
+        return Task::where('id', $id)->delete();
     }
 }
