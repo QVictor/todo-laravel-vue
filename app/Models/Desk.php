@@ -99,21 +99,4 @@ class Desk extends Model
     {
         return Desk::where('id', $id)->delete();
     }
-
-    public function massUpdate($data)
-    {
-        $sorting = $this->preparationDataForMassUpdate($data);
-        batch()->update((new Desk()), $sorting, 'id');
-    }
-
-    protected function preparationDataForMassUpdate($data)
-    {
-        $sort = json_decode($data);
-        $res = [];
-        foreach ($sort as $item) {
-            $item = json_decode(json_encode($item), true);
-            $res[] = $item;
-        }
-        return $res;
-    }
 }

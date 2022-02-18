@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Desk;
 use App\Models\Task;
+use App\Services\massUpdateService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -118,7 +119,7 @@ class DeskController extends Controller
 
     public function sort(Request $request): \Illuminate\Http\JsonResponse
     {
-        $this->desk->massUpdate($request->getContent());
+        massUpdateService::massUpdate($request->getContent(), $this->desk);
         return response()->json('', 204);
     }
 }
