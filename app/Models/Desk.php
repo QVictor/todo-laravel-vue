@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * App\Models\Desk
@@ -50,12 +52,68 @@ class Desk extends Model
         return $this->hasMany(Task::class);
     }
 
-    public static function maxSort() {
-        return Desk::max('sort');
+    public static function maxSort()
+    {
+        return self::max('sort');
     }
 
     public function sortTasks($orderBy): \Illuminate\Database\Eloquent\Collection
     {
         return $this->tasks()->orderBy('sort', $orderBy)->get();
+    }
+
+    public function sortedDesks()
+    {
+        $desks = self::select('*')->orderBy('sort')->get();
+        foreach ($desks as $desk) {
+            $desk['tasks'] = $desk->sortTasks('asc');
+        }
+        return $desks;
+    }
+
+    public function store(string $name)
+    {
+        return self::create([
+            'name' => $name,
+            'sort' => self::maxSort() + 1
+        ]);
+    }
+
+    public function updateDesk(int $deskId, string $name, bool $completed, Carbon $completed_at)
+    {
+
+        $existingDesk = Desk::find($deskId);
+
+        if ($existingDesk) {
+            $existingDesk->fill([
+                'name' => $name,
+                'completed' => $completed,
+                'completed_at' => $completed_at ? $completed_at->format('Y-m-d h:m:s') : null
+            ]);
+            $existingDesk->save();
+        }
+        return $existingDesk;
+    }
+
+    public function deleteIfExist(int $id)
+    {
+        return Desk::where('id', $id)->delete();
+    }
+
+    public function massUpdate($data)
+    {
+        $sorting = $this->preparationDataForMassUpdate($data);
+        batch()->update((new Desk()), $sorting, 'id');
+    }
+
+    protected function preparationDataForMassUpdate($data)
+    {
+        $sort = json_decode($data);
+        $res = [];
+        foreach ($sort as $item) {
+            $item = json_decode(json_encode($item), true);
+            $res[] = $item;
+        }
+        return $res;
     }
 }

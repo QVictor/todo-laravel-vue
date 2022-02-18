@@ -12,6 +12,13 @@ use Mavinoo\Batch\Batch;
 
 class DeskController extends Controller
 {
+    protected Desk $desk;
+
+    public function __construct(Desk $desk)
+    {
+        $this->desk = $desk;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,11 +26,7 @@ class DeskController extends Controller
      */
     public function index()
     {
-        $desks = Desk::select('*')->orderBy('sort')->get();
-        foreach ($desks as $desk) {
-            $desk['tasks'] = $desk->sortTasks('asc');
-        }
-        return $desks;
+        return $this->desk->sortedDesks();
     }
 
     /**
@@ -39,16 +42,13 @@ class DeskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $newDesk = new Desk;
-        $newDesk->name = $request->name;
-        $newDesk->sort = Desk::maxSort() + 1;
-        $saved = $newDesk->save();
-        if ($saved) {
+        $newDesk = $this->desk->store($request->name);
+        if ($newDesk) {
             return response()->json($newDesk, 201);
         } else {
             return response()->json('', 204);
@@ -58,7 +58,7 @@ class DeskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -69,7 +69,7 @@ class DeskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -80,20 +80,20 @@ class DeskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
-        $existingDesk = Desk::find($id);
-
-        if ($existingDesk) {
-            $existingDesk->name = $request->name;
-            $existingDesk->completed = $request->completed ? true : false;
-            $existingDesk->completed_at = $request->completed_at ? Carbon::now() : null;
-            $existingDesk->save();
-            return response()->json($existingDesk, 200);
+        $dateCarbon = Carbon::createFromFormat('Y-m-d h:m:s', $request->completed_at);
+        $updatedDesk = $this->desk->updateDesk(
+            (int)$id,
+            $request->name,
+            (bool)$request->completed,
+            $dateCarbon);
+        if ($updatedDesk) {
+            return response()->json($updatedDesk);
         } else {
             return response()->json([], 204);
         }
@@ -102,15 +102,14 @@ class DeskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        $existingDesk = Desk::find($id);
+        $existingDesk = $this->desk->deleteIfExist((int)$id);
 
         if ($existingDesk) {
-            $existingDesk->delete();
             return response()->json(['id' => (int)$id]);
         } else {
             return response()->json('', 204);
@@ -119,16 +118,7 @@ class DeskController extends Controller
 
     public function sort(Request $request): \Illuminate\Http\JsonResponse
     {
-        $sort = json_decode($request->getContent());
-        $sorting = [];
-        foreach ($sort as $item) {
-            $item = json_decode(json_encode($item), true);
-            $sorting[] = [
-                'id' => $item['id'],
-                'sort' => $item['sort']
-            ];
-        }
-        batch()->update((new Desk()), $sorting, 'id');
+        $this->desk->massUpdate($request->getContent());
         return response()->json('', 204);
     }
 }
